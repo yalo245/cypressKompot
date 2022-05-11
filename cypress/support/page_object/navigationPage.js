@@ -9,7 +9,7 @@ export  class NavigationPage{
   }
 
   orderPageIsOpen(){
-    cy.contains('Orders').click()
+    cy.contains('Orders').click({forse: true})
     cy.get('[data-qa="page-title"]').should('contain', 'Orders')
     cy.get('[type="button"]').should('contain', 'Create Order')
   }
@@ -30,6 +30,19 @@ export  class NavigationPage{
     cy.contains('Payments').click()
     cy.get('[data-qa="page-title"]').should('contain', 'Payments')
     cy.get('[type="button"]').should('contain', 'Create Payment')
+  }
+
+  schedulePageIsOpen(){
+    cy.contains('Schedule').click()
+    cy.get('.fs-5.fw-bolder.text-black').should('contain', 'Schedule')
+  }
+
+  humburgerDropdown(){
+    cy.get('nav .ant-dropdown-link.pointer.item').click()
+    const humburger = ['Workers', 'Addresses', 'Vendors', 'Products', 'Purchase Orders', 'Absences'];
+    for (let i = 0; i < humburger.length; i++){
+      cy.get('.ant-dropdown-menu-title-content').contains(humburger[i])
+    }
   }
 }
 
