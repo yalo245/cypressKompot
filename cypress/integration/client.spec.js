@@ -25,8 +25,19 @@ describe('CLIENT', () => {
 
     })
 
-    it('Client create placeholder are correct ', () => {
+    it('Codes list in dropdown menu are correct', () => {
+      clientPage.createBtn().click();
+      clientPage.phoneCodesAreCorrect();
+      clientPage.codeDropdown().contains('United States').click();
+      clientPage.cancelBtn().click();
+    });
+
+    it('Client create ', () => {
       cy.createClientAllData(client.firstName, client.lastName, client.phoneNumber, client.address, client.city, client.email, client.company, client.zip)
-    })
+    });
+
+    it('Client dashboard has correct data when client created', function () {
+      clientPage.clientCreated(client.firstName, client.lastName, client.address, client.phoneNumber, client.email, client.company);
+    });
   })
 })
