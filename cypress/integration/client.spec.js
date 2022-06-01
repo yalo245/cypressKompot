@@ -37,7 +37,23 @@ describe('CLIENT', () => {
     });
 
     it('Client dashboard has correct data when client created', function () {
+      cy.createClientAllData(client.firstName, client.lastName, client.phoneNumber, client.address, client.city, client.email, client.company, client.zip)
       clientPage.clientCreated(client.firstName, client.lastName, client.address, client.phoneNumber, client.email, client.company);
+    });
+
+    it('TC-Clients-053 User can see "Full Client form" when client created', function(){
+      cy.createClientAllData(client.firstName, client.lastName, client.phoneNumber, client.address, client.city, client.email, client.company, client.zip)
+      clientPage.clientFullForm(client.firstName, client.lastName);
+      clientPage.linkClient().click();
+    });
+
+    it('TC-Clients-030 Elements exist on left side Related Lists, Full form',function () {
+      cy.createClientAllData(client.firstName, client.lastName, client.phoneNumber, client.address, client.city, client.email, client.company, client.zip)
+      clientPage.clientFullForm(client.firstName, client.lastName);
+      //clientPage.clientLeftRelatedListPresent();
+      clientPage.leftSideBar()
+      clientPage.linkClient().click();
+
     });
   })
 })

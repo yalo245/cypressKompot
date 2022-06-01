@@ -2,7 +2,7 @@
 export default class ClientPage {
 
   createBtn = () => cy.get('[data-qa="create-client-button"]').should('contain', 'Create Client')
-  headerCreateNewClient = () => cy.get('[data-qa="page-title"]').should('contain', 'Create New Client')
+  headerCreateNewClient = () => cy.contains('Create New Client')
   additionalPhoneNumber = () => cy.get('[type="button"]').should('contain', '+ Add Phone Number');
   saveBtn = () => cy.get('[type="submit"]').contains('Save')
   headerClients = () => cy.get('[data-qa="page-title"]')
@@ -28,10 +28,24 @@ export default class ClientPage {
   codeDropdown = () => cy.get('.MuiList-root.MuiList-padding.MuiMenu-list.css-r8u8y9');
   header = () => cy.get('[data-qa="page-title"]').contains('Clients');
 
+  //Full Form
+  fullFormHeader =() => cy.get('[data-qa="page-title"]');
+  addressesFullForm = () => cy.get('[data-qa="addresses"]');
+  ordersFullForm = () => cy.get('[data-qa="orders"]');
+  estimatesFullForm = () => cy.get('[data-qa="estimates"]');
+  invoicesFullForm = () => cy.get('[data-qa="invoices"]');
+  purchaseOrderFullForm = () => cy.get('[data-qa="purchase orders"]');
+  paymentsFullForm = () => cy.get('[data-qa="payments"]');
+  messagesFullForm = () => cy.get('[data-qa="messages"]');
+  callsFullForm = () => cy.get('[data-qa="calls"]');
+  attachmentsFullForm = () => cy.get('[data-qa="attachments"]');
+  notesFullForm = () => cy.get('[data-qa="notes"]');
+  tasksFullForm = () => cy.get('[data-qa="tasks"]');
+
 
   placeholderAreCorrect() {
-    const key = ["First Name", "Last Name", "Company Name", "Phone", "Ext", "E-mail",
-      "Address", "Unit", "City", "State", "Zip"]
+    const key = ["First Name", "Last Name", "Company Name", "E-mail", "Phone", "Ext",
+      "Address", "Unit", "City", "State", "Zip", 'Additional Information']
     cy.get('.MuiBox-root.css-0')
       .find('.MuiOutlinedInput-root')
       .each((el, i) => {
@@ -71,13 +85,45 @@ export default class ClientPage {
 
   clientCreated(firstName, lastName, address, phoneNumber, email, company){
     cy.get('tbody tr').contains('tr', firstName).then( tableRow => {
-      cy.wrap(tableRow).find('td').eq(1).should('contain', `${firstName} ${lastName}`)
-      cy.wrap(tableRow).find('td').eq(2).should('contain', `${address}`)
-      cy.wrap(tableRow).find('td').eq(3).should('contain', `${phoneNumber}`)
-      cy.wrap(tableRow).find('td').eq(4).should('contain', `${email}`)
-      cy.wrap(tableRow).find('td').eq(5).should('contain', `${company}`)
+      cy.wrap(tableRow).find('td').eq(0).should('contain', `${firstName} ${lastName}`)
+      cy.wrap(tableRow).find('td').eq(1).should('contain', `${address}`)
+      cy.wrap(tableRow).find('td').eq(2).should('contain', `${phoneNumber}`)
+      cy.wrap(tableRow).find('td').eq(3).should('contain', `${email}`)
+      // cy.wrap(tableRow).find('td').eq(4).should('contain', `${company}`)
     })
     this.header().should('be.visible');
   }
 
+  clientFullForm(firstName, lastName){
+    cy.get('tbody tr').find('td').contains(`${firstName} ${lastName}`).first().click()
+    this.fullFormHeader().should('be.visible');
+  }
+
+  clientLeftRelatedListPresent(){
+    this.addressesFullForm().should('be.visible');
+    this.ordersFullForm().should('be.visible');
+    this.estimatesFullForm().should('be.visible');
+    this.invoicesFullForm().should('exist');
+    this.purchaseOrderFullForm().should('exist');
+    this.paymentsFullForm().should('exist');
+    this.messagesFullForm().should('exist');
+    this.callsFullForm().should('exist');
+    this.attachmentsFullForm().should('exist');
+    this.notesFullForm().should('exist');
+    this.tasksFullForm().should('exist');
+  }
+
+  leftSideBar() {
+    const key = ["Orders", "Estimates", "Invoices", "Payments", "Calls", "Messages",
+      "Attachments", "Purchase Order", "Notes", "Task", "Addresses"]
+    cy.get('.MuiList-root ')
+      .find('.MuiListItem-root')
+      .each((el, i) => {
+        cy.wrap(el).then(value => {
+          const itemText = value.text().trim()
+          expect(itemText).contains(key[i])
+
+        })
+      })
+  }
 }
