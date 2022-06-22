@@ -95,7 +95,7 @@ export default class ClientPage {
   }
 
   clientFullForm(firstName, lastName){
-    cy.get('tbody tr').find('td').contains(`${firstName} ${lastName}`).first().click()
+    cy.get('[data-field="name"]>div>div>a').first().click({force:true});
     this.fullFormHeader().should('be.visible');
   }
 
