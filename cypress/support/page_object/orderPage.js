@@ -16,4 +16,20 @@ export default class OrderPage {
       })
     cy.get('[qa_id="InputStartDate"]').should('have.value', '06/14/2022')
   }
+
+  timePikerStartTime() {
+    cy.get('[data-testid="ClockIcon"]').first().click()
+    cy.get('[role="listbox"]').find('[role="option"]')
+      .then(role => {
+        cy.wrap(role)
+        cy.get('[role="option"]').contains('10').click({force:true})
+      })
+    cy.get('[role="listbox"]').find('[role="option"]')
+      .then(role => {
+        cy.wrap(role)
+        cy.get('[role="option"]').contains('25').click({force:true})
+      })
+
+    //cy.get('[qa_id="InputStartDate"]').should('have.value', '06/14/2022')
+  }
 }
