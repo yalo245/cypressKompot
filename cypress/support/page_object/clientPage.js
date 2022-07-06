@@ -99,6 +99,7 @@ export default class ClientPage {
     this.fullFormHeader().should('be.visible');
   }
 
+
   clientLeftRelatedListPresent(){
     this.addressesFullForm().should('be.visible');
     this.ordersFullForm().should('be.visible');
