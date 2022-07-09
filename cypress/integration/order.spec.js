@@ -20,9 +20,9 @@ describe('ORDER', () => {
       clientPage.linkClient().click();
       clientPage.clientFullForm(client.firstName, client.lastName);
       orderPage.createOrderFromClient(client.firstName, client.lastName)
-      calendarPage.selectStartDayFromToday(3)
-      calendarPage.selectEndDayFromToday(9)
-      //orderPage.timePikerStartTime()
+      // calendarPage.selectStartDayFromToday(3)
+      // calendarPage.selectEndDayFromToday(9)
+      orderPage.timePikerStartTime()
     })
   })
 })
